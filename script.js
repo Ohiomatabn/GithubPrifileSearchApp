@@ -1,15 +1,17 @@
-function getUserProfile(){
+async function getUserProfile(){
   //Decalre variable
   const name = document.getElementById('name').value;
   const usersDetails = document.getElementById('users-details')
 
   //Check if the name is empty or null throw an error and return
   if(name === '' || name === ' '){
-    usersDetails.innerHTML += `
-    <div class="error-container">
-      <p>Please enter a valid user name</p>
-    </div>
-  `
+    const modal = document.getElementById('modal');
+    modal.innerHTML = 'Please enter a valid user name'
+    modal.style.margin =   '1rem 0';
+
+    setTimeout(() =>{
+      modal.style.margin = '-6.5rem 0';
+    },3000);
   return 
   }
     //Get the github user api from the sever
@@ -27,11 +29,13 @@ function getUserProfile(){
         //that is the search is not found
       if(typeof user.name === undefined){
           //notify the user with an error message
-          usersDetails.innerHTML += `
-          <div class="error-container">
-            <p>Your search did not match any github profile</p>
-          </div>
-        `
+          const modal = document.getElementById('modal');
+          modal.innerHTML = 'Your search did not return any result'
+          modal.style.margin =   '1rem 0';
+    
+          setTimeout(() =>{
+            modal.style.margin = '-6.5rem 0';
+          },3000);
       }
       else{
           //If the search is found update the page with the object convert back to the javascript object
@@ -59,12 +63,13 @@ function getUserProfile(){
 
     //Add event listener for handling any connection error
   xhr.addEventListener('error', (error) =>{
-      usersDetails.innerHTML += `
-      <div class="error-container">
-        <img src="download.png">
-        <p class="error">Connection Error pleaser review your network and try again</p>
-      </div>
-    `
+      const modal = document.getElementById('modal');
+      modal.innerHTML = 'Connection error! please check your connection and try again'
+      modal.style.margin =   '1rem 0';
+
+      setTimeout(() =>{
+        modal.style.margin = '-6.5rem 0';
+      },3000);
   });
 }
 
